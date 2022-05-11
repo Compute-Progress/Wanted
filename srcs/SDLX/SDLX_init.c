@@ -4,7 +4,7 @@ static SDLX_Display display;
 
 void	SDLX_Close(void)
 {
-	SDL_DestroyWindow(SDLX_Display_Get()->window);
+	SDL_DestroyWindow(display.window);
 	SDL_Quit();
 }
 

@@ -14,6 +14,7 @@ At the end of it I hope to have build the following:
   - Simple mouse interaction and hitbox
   - Timer (game should record *real* time elapsed between frames
   - Fps cap
+  - Simple draw text
   - For added challenge, it shoudl handle resizing
 
 ## Concept
@@ -22,4 +23,4 @@ The conceptis simple and inspired from Mario 64's Wanted minigame. One person is
 
 ## Testing the limits
 
-However "easy" this project seems, it is also a test of my abilities, as are all the projects in this organization. How fast and how can I code this... How hard will it actually be? The clock starts.... Now!
+However "easy" this project seems, it is also a test of my abilities, as are all the projects in this organization. How fast and how well can I code this... How hard will it actually be? The clock starts.... Now!
