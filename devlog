@@ -1,0 +1,23 @@
+- 05/10 15:33:
+    Cloned repo. Quantum vault still proves to be really useful when starting projects. Granted, this is very simple and doesn't require many dependicies.
+    Something cool to build would be an auto update makefile.
+
+    Thinking about the init and game loop process, I quite liked the one I had previously. I'm also thinking about conventions to use , there too I quite like what I had before
+    but I think it could be improved in some ways : 
+        ------ Naming and vars -------
+        - Functions, files, struct names to be prefixed with SDLX_, unless internal in which case to be prefixed with _SDLX_internal
+        - Functions must follow the following scheme : SDLX_TargetObject_FunctionPurpose (to follow SDL's convention)
+        - Variables must follow the following scheme : snake_case 
+            -prefixed : 
+                internal:   _intern_, 
+                safe/sanitized: s_ 
+                user input: usr_
+                relevant to rendering system : rdr_
+
+        - Use uint types or SDL_int if there is sucha  thing (very minor, but as in length is implementation defined, still useful)
+        - Functions shall return a proper error code, and it shall be linked to an enum contianing all error codes
+        - SDLX shall NOT allocate any data (or allocate as little as it possibly can)
+        - SDLX shall not hide any varibales or structs or do so as little as it possibly can
+
+- 05/10 16:39
+    After a lot of thinking and wrting up the above, it is time to start coding;

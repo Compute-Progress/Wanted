@@ -14,6 +14,7 @@ At the end of it I hope to have build the following:
   - Simple mouse interaction and hitbox
   - Timer (game should record *real* time elapsed between frames
   - Fps cap
+  - For added challenge, it shoudl handle resizing
 
 ## Concept
 
