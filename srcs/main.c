@@ -16,13 +16,13 @@ int main()
         0
     );
     display = SDLX_Display_Get();
-    // (void)display;
     tex = SDLX_Texture_Load("assets/circle.png", display);
     SDLX_Sprite_Create(&sprite, 0, tex);
     sprite.src = NULL;
     sprite.dst = NULL;
     // SDLX_Background_Set()
     SDLX_RenderQueue_Push(&sprite);
+    // // queue = SDLX_RenderQueue_Get(0);
     while(1)
     {
         SDLX_Render_Reset(display->renderer);

@@ -1,7 +1,7 @@
 #ifndef SDLX_MACRO
 # define SDLX_MACRO
 
-# define DEFAULT_QUEUE_AMOUNT 1
+# define DEFAULT_QUEUES_COUNT 1
 # define DEFAULT_QUEUE_SIZE 5
 
 # ifndef MAX

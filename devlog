@@ -55,3 +55,7 @@
 
 - 05/12 17:45
     I'm getting a 'corrupted size vs. prev_size' error... I've never had it before and quite frankly I'm not sure what's causing it. It have it tracked down to the SDL_Exit() function.... But it must be something that is messing with memory somewhere... though I'm not sure why at alll since sdlx is very small so far and doesn't do much at all. Seems to break even when not using SDLX...
+
+    Okay, found the problem.... I lied, it's 100% because of SDLX.. 
+    I was iterating over DEFAULT_QUEUE_SIZE of queues when the size was set to 
+    DEFAULT_QUEUE_AMOUNT. I thought those names were descriptive but it turns out they are interchangeable and therefore confusing

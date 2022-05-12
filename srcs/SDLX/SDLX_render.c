@@ -13,15 +13,15 @@ void SDLX_RenderQueues_Init()
 	uint32_t i;
 
 	i = 0;
-	queues.queues = calloc(DEFAULT_QUEUE_AMOUNT, sizeof(SDLX_RenderQueue));
-	while (i < DEFAULT_QUEUE_SIZE)
+	queues.queues = SDL_calloc(DEFAULT_QUEUES_COUNT, sizeof(SDLX_RenderQueue));
+	while (i < DEFAULT_QUEUES_COUNT)
 	{
-		queues.queues[i].sprites = calloc(DEFAULT_QUEUE_SIZE, sizeof(SDLX_Sprite *));
+		queues.queues[i].sprites = SDL_calloc(DEFAULT_QUEUE_SIZE, sizeof(SDLX_Sprite *));
 		queues.queues[i].capacity = DEFAULT_QUEUE_SIZE;
 		queues.queues[i].size = 0;
 		++i;
 	}
-	queues.count = DEFAULT_QUEUE_AMOUNT;
+	queues.count = DEFAULT_QUEUES_COUNT;
 } 
 
 
@@ -34,12 +34,10 @@ void 		SDLX_RenderAll(SDLX_Display *display)
 	i = 0;
 	while (i < queues.count)
 	{
-		// SDL_Log("THIS 1");
 		current = &(queues.queues[i]);
 		n = 0;
 		while (n < current->size)
 		{
-			// SDL_Log("THIS 2");
 			SDL_RenderCopyEx(
 				display->renderer,
 				current->sprites[n]->texture,
@@ -69,7 +67,6 @@ void		SDLX_RenderQueue_Push(SDLX_Sprite *sprite)
 
 	if (sprite->primary_Layer < queues.count)
 	{
-		SDL_Log("HERE %d", sprite->primary_Layer);
 		current = &(queues.queues[sprite->primary_Layer]);
 		if (current->size >= current->capacity)
 		{
@@ -78,7 +75,6 @@ void		SDLX_RenderQueue_Push(SDLX_Sprite *sprite)
 		}
 		current->sprites[current->size] = sprite;
 		current->size++;
-		SDL_Log("Got %ld %ld",current->size, queues.queues[sprite->primary_Layer].size);
 	}
 }
 
