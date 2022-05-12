@@ -41,8 +41,10 @@ typedef struct SDLX_Sprite
     SDL_Rect *src;
     
     SDL_Texture *texture;
-    SDL_Point   center;
-    SDL_bool    flip;
+    SDL_Point   *center;
+    SDL_Point   _center;
+    
+    SDL_RendererFlip    flip;
 
     double      angle;
 }   SDLX_Sprite;

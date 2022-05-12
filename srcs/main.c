@@ -3,6 +3,9 @@
 int main()
 {
     SDLX_Display *display;
+    SDLX_Sprite sprite;
+    SDL_Texture *tex;
+    // SDLX_RenderQueue *queue;
 
     SDLX_Start(
         WINDOW_NAME,
@@ -12,12 +15,19 @@ int main()
         WINDOW_W,
         0
     );
-
     display = SDLX_Display_Get();
-
-    (void)display;
+    // (void)display;
+    tex = SDLX_Texture_Load("assets/circle.png", display);
+    SDLX_Sprite_Create(&sprite, 0, tex);
+    sprite.src = NULL;
+    sprite.dst = NULL;
+    // SDLX_Background_Set()
+    SDLX_RenderQueue_Push(&sprite);
     while(1)
     {
+        SDLX_Render_Reset(display->renderer);
         SDLX_InputLoop();
+        SDLX_RenderAll(display);
+        SDL_RenderPresent(display->renderer);
     }
 }

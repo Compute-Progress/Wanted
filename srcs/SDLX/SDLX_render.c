@@ -8,7 +8,7 @@ typedef struct _internal_Queues
 
 static _intern_Queues queues;
 
-static void SDLX_RenderQueues_Init()
+void SDLX_RenderQueues_Init()
 {
 	uint32_t i;
 
@@ -16,12 +16,12 @@ static void SDLX_RenderQueues_Init()
 	queues.queues = calloc(DEFAULT_QUEUE_AMOUNT, sizeof(SDLX_RenderQueue));
 	while (i < DEFAULT_QUEUE_SIZE)
 	{
-		queues.queues[i].sprites = calloc(DEFAULT_QUEUE_AMOUNT, sizeof(SDLX_Sprite *));
-		queues.queues[i].capacity = DEFAULT_QUEUE_AMOUNT;
+		queues.queues[i].sprites = calloc(DEFAULT_QUEUE_SIZE, sizeof(SDLX_Sprite *));
+		queues.queues[i].capacity = DEFAULT_QUEUE_SIZE;
 		queues.queues[i].size = 0;
 		++i;
 	}
-	queues.count = DEFAULT_QUEUE_SIZE;
+	queues.count = DEFAULT_QUEUE_AMOUNT;
 } 
 
 
@@ -34,17 +34,19 @@ void 		SDLX_RenderAll(SDLX_Display *display)
 	i = 0;
 	while (i < queues.count)
 	{
-		current = &(queues.queues[queues.count]);
+		// SDL_Log("THIS 1");
+		current = &(queues.queues[i]);
 		n = 0;
 		while (n < current->size)
 		{
+			// SDL_Log("THIS 2");
 			SDL_RenderCopyEx(
 				display->renderer,
 				current->sprites[n]->texture,
 				current->sprites[n]->src,
 				current->sprites[n]->dst,
 				current->sprites[n]->angle,
-				&current->sprites[n]->center,
+				current->sprites[n]->center,
 				current->sprites[n]->flip
 			);
 			++n;
@@ -67,6 +69,7 @@ void		SDLX_RenderQueue_Push(SDLX_Sprite *sprite)
 
 	if (sprite->primary_Layer < queues.count)
 	{
+		SDL_Log("HERE %d", sprite->primary_Layer);
 		current = &(queues.queues[sprite->primary_Layer]);
 		if (current->size >= current->capacity)
 		{
@@ -75,6 +78,7 @@ void		SDLX_RenderQueue_Push(SDLX_Sprite *sprite)
 		}
 		current->sprites[current->size] = sprite;
 		current->size++;
+		SDL_Log("Got %ld %ld",current->size, queues.queues[sprite->primary_Layer].size);
 	}
 }
 
@@ -92,7 +96,7 @@ void		SDLX_RenderQueue_FlushAll()
 
 void        SDLX_RenderQueue_Flush(uint32_t id)
 {
-	if (id >= 0 && queues.count < id)
+	if (queues.count < id)
 		queues.queues[id].size = 0;
 }
 
@@ -100,7 +104,8 @@ uint32_t    SDLX_RenderQueue_Create(SDL_bool isSorted);
 
 SDLX_RenderQueue *SDLX_RenderQueue_Get(uint32_t id)
 {
-	if (queues.count < id)
+	if (id < queues.count)
 		return &queues.queues[id];
+
 	return NULL;
 }

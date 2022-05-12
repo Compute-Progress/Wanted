@@ -5,7 +5,7 @@ FLAGS = -Wall -Wextra -Werror
 INCLUDES = -I includes/ -I includes/SDL2/ -I includes/SDLX/
 
 LIB_DIR = libs/
-LIBRARIES= -l SDL2
+LIBRARIES= -l SDL2 -l SDL2_image 
 # LIBRARIES = $(LIB_DIR)libSDL2.dylib $(LIB_DIR)libSDL2_image.dylib $(LIB_DIR)libSDL2_ttf.dylib
 STATIC_LIB = 
 
@@ -17,6 +17,8 @@ BIN_DIR = bin/
 SDLX_NAMES =		\
 		SDLX_init	\
 		SDLX_input	\
+		SDLX_render	\
+		SDLX_utils	\
 
 SRC_FILES =			\
 	$(addprefix $(SDLX_DIR), $(SDLX_NAMES))\

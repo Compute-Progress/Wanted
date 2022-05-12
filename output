@@ -1,0 +1,14 @@
+rm -rf bin/
+rm -f wanted
+mkdir -p bin/
+mkdir -p bin/srcs/SDLX/
+gcc -Wall -Wextra -Werror -v -I includes/ -I includes/SDL2/ -I includes/SDLX/ -c srcs/SDLX/SDLX_init.c -o bin/srcs/SDLX/SDLX_init.o
+mkdir -p bin/srcs/SDLX/
+gcc -Wall -Wextra -Werror -v -I includes/ -I includes/SDL2/ -I includes/SDLX/ -c srcs/SDLX/SDLX_input.c -o bin/srcs/SDLX/SDLX_input.o
+mkdir -p bin/srcs/SDLX/
+gcc -Wall -Wextra -Werror -v -I includes/ -I includes/SDL2/ -I includes/SDLX/ -c srcs/SDLX/SDLX_render.c -o bin/srcs/SDLX/SDLX_render.o
+mkdir -p bin/srcs/SDLX/
+gcc -Wall -Wextra -Werror -v -I includes/ -I includes/SDL2/ -I includes/SDLX/ -c srcs/SDLX/SDLX_utils.c -o bin/srcs/SDLX/SDLX_utils.o
+mkdir -p bin/srcs/
+gcc -Wall -Wextra -Werror -v -I includes/ -I includes/SDL2/ -I includes/SDLX/ -c srcs/main.c -o bin/srcs/main.o
+gcc -Wall -Wextra -Werror -v -I includes/ -I includes/SDL2/ -I includes/SDLX/ -o wanted bin/srcs/SDLX/SDLX_init.o bin/srcs/SDLX/SDLX_input.o bin/srcs/SDLX/SDLX_render.o bin/srcs/SDLX/SDLX_utils.o bin/srcs/main.o -l SDL2 -l sdl2_image 
