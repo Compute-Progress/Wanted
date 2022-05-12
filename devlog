@@ -21,3 +21,34 @@
 
 - 05/10 16:39
     After a lot of thinking and wrting up the above, it is time to start coding;
+
+- 05/10 19:39
+    I just had a good thought about animation and how it may be diffrerent/better than the previous system. 
+    Previously, animations revolved around 3 components : Animator, Animation and Sprite where :
+        - An animator, which would take care of keeping track of the current frames and array of animations and update the sprite's texture, dst and src accordingly
+        - An array of Animation which would each contain a texture and an array of SDL_rect srcs
+        - Sprite which is the struct modified by Animator
+    Since one of my goals is to move away from OOP and have a more Data oriented approach, I though maybe keeping all the animations in the animator is a waste of ressources since only 1 of those will be used. It would be much better to keep all the animations in a separate array and ONLY access it if we need to change the animation. Animator would then only have a pointer to the current Animation instead of the whole array, and maybe also a pointer to the Animations struct which holds all the relevant Animations.
+
+    Of coursethe problem with that is that eitehr the user has to manually do the swicth or we need an SDLX_Anim_Switch function whose sole purpose is to take in a new state and update the current anim pointer and reset the frame count. I think it would be an improvment though.
+    In the previous system,there was also an internal animator handler which would keep track of all created animators and update them all at once. Since it had to keep track of them SDLX had to allocate some memory for it and occasionally grow it as more animators are added. I think I will get rid of this and provide a single Animator_Update function, that the user may or may not call on their Animators. I may or may not also add an Animator_UpadateBulk. Though I don't really see a use case for it at the moment. Overall I also think this would be a good change, as it lets the user store things the way they want, for the cost of a little more overhead.
+    . In any case, animation is for a later project.
+
+    ---- Rendering -----
+
+    This article makes a good case for using 3d engines to render 2D sprites http://ithare.com/game-graphics-101-rendering-2d-on-gpu-shaders/
+
+    However I am not there yet, and I will still be using render queues. The question is... One render queue? Or multiple? 
+    - One renderQueue : Minimal memory allocation, but needs to either sort at the end or insert in order
+    - Multiple queues : More alloactions, but no sorting required
+    As ever, it is the speed vs memory tradeoff...
+    On furhter thought, multiple render queues seem to achieve both... A Sprite may have a primary and a secondayr layer. The primary layer would be to assign it to the correct renderQueue, the secondary, to sort within the queue. It is somewhat of a middle point, with the user being able to create new renderQueues and let them sort or not sort
+
+- 05/11 01:37
+
+    A config file would be useful. Some things like default render queue amount are not easily changeable, or at least are in the source code and need a recompile... 
+    So far I'm thinking of having :
+    - Window name
+    - Window width / height,
+    - Window x / y (only problem isit would take more work to use SDL's macros)
+    - Default renderqueue amount
