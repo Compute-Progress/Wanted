@@ -1,12 +1,14 @@
+- SDLX -
 Display an image  DONE
-Display background
+Display backgroundm DONE
 Clear screen    DONE
-Get mouse click and position
+Get mouse click and position DONE   
 Timer and fps
 Display image in layers DONE
+Display text
+- Game -
 Simple hitbox
 Click on layers
-Display text
 Move images
 Algorithm to randomize start position :
     - Wanted position : 

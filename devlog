@@ -59,3 +59,8 @@
     Okay, found the problem.... I lied, it's 100% because of SDLX.. 
     I was iterating over DEFAULT_QUEUE_SIZE of queues when the size was set to 
     DEFAULT_QUEUE_AMOUNT. I thought those names were descriptive but it turns out they are interchangeable and therefore confusing
+
+-05/12 11:27
+
+    I've decide not to dwell into the resizeable window issue at the momement.. It is too many things to focus on, as resizing the window also implies resizing the textures and changing where they appear.... It is something that needs to be thought about further before being implemented. 
+    I think the important part is to somehow preserve the aspect ratio,but do the resizing relative to the smallest of width or height.

@@ -27,6 +27,7 @@ int main()
     {
         SDLX_Render_Reset(display->renderer);
         SDLX_InputLoop();
+        SDLX_Input_Update();
         SDLX_RenderAll(display);
         SDL_RenderPresent(display->renderer);
     }

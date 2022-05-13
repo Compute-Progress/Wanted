@@ -58,4 +58,10 @@ typedef struct SDLX_RenderQueue
     SDLX_Sprite **sprites;
 }   SDLX_RenderQueue;       
 
+typedef struct SDLX_Input
+{
+    SDL_Point mouse;
+    uint32_t mouse_state;
+}   SDLX_Input;
+
 #endif

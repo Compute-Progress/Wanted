@@ -59,6 +59,7 @@ void        SDLX_Render_Reset(SDLX_Display *display)
 {
 	SDL_RenderClear(display->renderer);
 	SDL_SetRenderDrawColor(display->renderer, 0, 0, 0, 0);
+	SDL_RenderCopy(display->renderer, display->background, NULL, NULL);
 }
 
 void		SDLX_RenderQueue_Push(SDLX_Sprite *sprite)

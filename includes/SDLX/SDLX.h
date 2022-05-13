@@ -34,6 +34,14 @@ SDLX_RenderQueue	*SDLX_RenderQueue_Get(uint32_t id);
  * SDLX sprite functions
  */
 
-void		SDLX_Sprite_Create(SDLX_Sprite *dest, uint32_t layer, SDL_Texture *texture);
+void		SDLX_Sprite_Create(SDLX_Sprite *dest, uint32_t layer, SDL_Texture *texture);\
+
+/**
+ * SDLX Input functions 
+ */
+
+void		SDLX_Input_Update(void);
+
+SDLX_Input 	SDLX_Input_Get(void);
 
 #endif
