@@ -29,16 +29,17 @@ int SDLX_TimedLoop(int (*game_loop)(void *), void *args)
 	static double consumable;
 
 	current = SDL_GetTicks();
-	_intern_time.delta_time = current - _intern_time.last_frame;
 	_intern_time.last_frame = current;
-	consumable += _intern_time.delta_time;
+	consumable += current - _intern_time.last_frame;
+	_intern_time.delta_time /= UPDATE_LEN_MS;
 	i = 0;
 	while (consumable > 0 && i < MAX_UPDATE_PER_FRAME)
 	{
 		// Maybe a preferable approach would be to time the length of the update
 		// and either :
 		//			- Average it and use an N update / sec
-		//			- Deduct it from consumbale
+		//			- Deduct it from consumbale, set it as delta time
+		_intern_time.delta_time = MIN(consumable, UPDATE_LEN_MS);
 		game_loop(args);
 		consumable -= UPDATE_LEN_MS;
 		++i;
