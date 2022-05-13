@@ -31,7 +31,7 @@ int SDLX_TimedLoop(int (*game_loop)(void *), void *args)
 	current = SDL_GetTicks();
 	_intern_time.last_frame = current;
 	consumable += current - _intern_time.last_frame;
-	_intern_time.delta_time /= UPDATE_LEN_MS;
+	consumable = MAX(consumable, UPDATE_LEN_MS);
 	i = 0;
 	while (consumable > 0 && i < MAX_UPDATE_PER_FRAME)
 	{
@@ -39,12 +39,12 @@ int SDLX_TimedLoop(int (*game_loop)(void *), void *args)
 		// and either :
 		//			- Average it and use an N update / sec
 		//			- Deduct it from consumbale, set it as delta time
-		_intern_time.delta_time = MIN(consumable, UPDATE_LEN_MS);
+		_intern_time.delta_time = MIN(consumable, UPDATE_LEN_MS) / UPDATE_LEN_MS;
+		// SDL_Log("Delta time %d %d consumable %f ", current, _intern_time.delta_time, consumable);
 		game_loop(args);
 		consumable -= UPDATE_LEN_MS;
 		++i;
 	}
-
 	return i;
 }
 
@@ -60,3 +60,5 @@ void SDLX_CapFPS()
 	SDL_Delay(delay);
 	start = SDL_GetTicks();
 }
+
+SDLX_Time SDLX_Time_Get(void) {return _intern_time;}

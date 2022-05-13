@@ -66,8 +66,8 @@ typedef struct SDLX_Input
 
 typedef struct SDLX_Time
 {
-    Uint64     delta_time;
-    Uint64     last_frame;
+    Uint32     delta_time;
+    Uint32     last_frame;
     uint32_t    frame_count;
 }   SDLX_Time;
 

@@ -10,7 +10,9 @@ int simple_loop(void *data)
         go = 1;
     if (sprite->dst->x > WINDOW_W)
         go = -1;
-    sprite->dst->x += go;
+    (void)go;
+    sprite->dst->x += go * SDLX_Time_Get().delta_time;
+    // SDL_Log("DEltae time %d", SDLX_Time_Get().delta_time);
     return 1;
 }
 
