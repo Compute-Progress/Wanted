@@ -21,11 +21,12 @@ SDL_Texture		*SDLX_Texture_Load(char *path, SDLX_Display *display);
  */
 void 		SDLX_RenderAll(SDLX_Display *display);
 void 		SDLX_RenderOne(uint32_t id);
-void        SDLX_Render_Reset();
+void        SDLX_Render_Reset(SDLX_Display *display);
 
 void 		SDLX_RenderQueues_Init();
 void		SDLX_RenderQueue_Push(SDLX_Sprite *sprite);
 void        SDLX_RenderQueue_Flush(uint32_t id);
+void		SDLX_RenderQueue_FlushAll(void);
 uint32_t    SDLX_RenderQueue_Create(SDL_bool isSorted);
 
 SDLX_RenderQueue	*SDLX_RenderQueue_Get(uint32_t id);
@@ -41,7 +42,14 @@ void		SDLX_Sprite_Create(SDLX_Sprite *dest, uint32_t layer, SDL_Texture *texture
  */
 
 void		SDLX_Input_Update(void);
-
 SDLX_Input 	SDLX_Input_Get(void);
+
+/**
+ * SDLX Utils functions
+ * 
+ */
+
+void 		SDLX_CapFPS();
+int			SDLX_TimedLoop(int (*game_loop)(void *), void *args);
 
 #endif

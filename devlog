@@ -64,3 +64,10 @@
 
     I've decide not to dwell into the resizeable window issue at the momement.. It is too many things to focus on, as resizing the window also implies resizing the textures and changing where they appear.... It is something that needs to be thought about further before being implemented. 
     I think the important part is to somehow preserve the aspect ratio,but do the resizing relative to the smallest of width or height.
+
+    For text,I'm thinking of letting the user set a font, or else use a default font.
+
+- 05/13 12:51
+
+    The key to upadting and rendering properly seems to be to update independently of rendering. Meaning one update won't necessarily equal one render.
+    I'm going to set a "n updates per ms" macro, and use the FPS one as a n of frames rendered per sec

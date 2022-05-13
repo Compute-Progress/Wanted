@@ -1,11 +1,25 @@
 #include "../includes/wanted.h"
 
+int simple_loop(void *data)
+{
+    SDLX_Sprite *sprite;
+    static int go = 1;
+
+    sprite = data;
+    if (sprite->dst->x < 0 )
+        go = 1;
+    if (sprite->dst->x > WINDOW_W)
+        go = -1;
+    sprite->dst->x += go;
+    return 1;
+}
+
 int main()
 {
     SDLX_Display *display;
     SDLX_Sprite sprite;
     SDL_Texture *tex;
-    // SDLX_RenderQueue *queue;
+    SDL_Rect dst;
 
     SDLX_Start(
         WINDOW_NAME,
@@ -15,20 +29,25 @@ int main()
         WINDOW_W,
         0
     );
+    dst.h = WINDOW_H / 10;
+    dst.w = WINDOW_W / 10;
+    dst.y = WINDOW_H / 2;
     display = SDLX_Display_Get();
     tex = SDLX_Texture_Load("assets/circle.png", display);
     SDLX_Sprite_Create(&sprite, 0, tex);
     sprite.src = NULL;
-    sprite.dst = NULL;
-    // SDLX_Background_Set()
-    SDLX_RenderQueue_Push(&sprite);
-    // // queue = SDLX_RenderQueue_Get(0);
+    sprite._dst = dst;
+
     while(1)
     {
-        SDLX_Render_Reset(display->renderer);
+        SDLX_Render_Reset(display);
+        SDLX_RenderQueue_FlushAll();
         SDLX_InputLoop();
         SDLX_Input_Update();
+        SDLX_TimedLoop(simple_loop, &sprite);
+        SDLX_RenderQueue_Push(&sprite);
         SDLX_RenderAll(display);
         SDL_RenderPresent(display->renderer);
+        SDLX_CapFPS();
     }
 }

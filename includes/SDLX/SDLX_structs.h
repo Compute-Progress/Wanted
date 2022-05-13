@@ -60,8 +60,15 @@ typedef struct SDLX_RenderQueue
 
 typedef struct SDLX_Input
 {
-    SDL_Point mouse;
-    uint32_t mouse_state;
+    SDL_Point   mouse;
+    uint32_t    mouse_state;
 }   SDLX_Input;
+
+typedef struct SDLX_Time
+{
+    Uint64     delta_time;
+    Uint64     last_frame;
+    uint32_t    frame_count;
+}   SDLX_Time;
 
 #endif
