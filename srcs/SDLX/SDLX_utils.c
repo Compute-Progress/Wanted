@@ -4,6 +4,7 @@ static SDLX_Time _intern_time;
 
 void		SDLX_Sprite_Create(SDLX_Sprite *dest, uint32_t layer, SDL_Texture *texture)
 {
+	SDL_memset(dest, 0, sizeof(SDLX_Sprite));
 	if (dest == NULL)
 		return ;
 	dest->texture = texture;

@@ -5,8 +5,6 @@ void SDLX_Sprite_Print(SDLX_Sprite *sprite)
 	SDL_Log("Sprite: primary %d secondary %d \
 			\n_dst : {x: %d, y: %d, w: %d, h: %d},\
 			\n_src : {x: %d, y: %d, w: %d, h: %d},\
-			\n*dst : {x: %d, y: %d, w: %d, h: %d},\
-			\n*src : {x: %d, y: %d, w: %d, h: %d},\
 			\n*dst address : %p, *src address : %p, center address %p,\
 			\ncenter : {x: %d, y: %d},\
 			\ntexture : %p, angle: %f, flip %d\
@@ -14,8 +12,6 @@ void SDLX_Sprite_Print(SDLX_Sprite *sprite)
 			sprite->primary_Layer, sprite->secondary_layer,
 			sprite->_dst.x, sprite->_dst.y, sprite->_dst.w, sprite->_dst.h,
 			sprite->_src.x, sprite->_src.y, sprite->_src.w, sprite->_src.h,
-			sprite->dst->x, sprite->dst->y, sprite->dst->w, sprite->dst->h,
-			sprite->src->x, sprite->src->y, sprite->src->w, sprite->src->h,
 			sprite->dst, sprite->src, sprite->center,
 			sprite->_center.x , sprite->_center.y,
 			sprite->texture, sprite->angle, sprite->flip

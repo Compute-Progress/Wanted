@@ -18,6 +18,7 @@ master *game_init(void)
 		dst.h = WINDOW_H / 10;
 		dst.w = WINDOW_W / 10;
 		dst.y = WINDOW_H / 2;
+		dst.x = 0;
 		game_master->sprites[i].src = NULL;
 		game_master->sprites[i]._dst = dst;
 		++i;
@@ -43,12 +44,12 @@ int game_loop(void *data)
 	game_master = data;
 	game_master->timer += time.delta_time;
 
+	// SDLX_Sprite_Print(&game_master->sprites[0]);
     if (game_master->sprites[0].dst->x < 0 )
         go = 1;
     if (game_master->sprites[0].dst->x > WINDOW_W)
         go = -1;
     game_master->sprites[0].dst->x += go * time.delta_time;
-	SDLX_Sprite_Print(&game_master->sprites[0]);
 	SDLX_RenderQueue_Push(&(game_master->sprites[0]));
 
 	return 1;
