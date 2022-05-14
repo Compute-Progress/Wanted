@@ -53,4 +53,11 @@ void 		SDLX_CapFPS();
 SDLX_Time 	SDLX_Time_Get(void);
 int			SDLX_TimedLoop(int (*game_loop)(void *), void *args);
 
+//Maybe put dbeug in its own header to be included separately
+/**
+ * SDLX debug functions
+ * 
+ */
+void 		SDLX_Sprite_Print(SDLX_Sprite *sprite);
+
 #endif

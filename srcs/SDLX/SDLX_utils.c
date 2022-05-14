@@ -40,7 +40,6 @@ int SDLX_TimedLoop(int (*game_loop)(void *), void *args)
 		//			- Average it and use an N update / sec
 		//			- Deduct it from consumbale, set it as delta time
 		_intern_time.delta_time = MIN(consumable, UPDATE_LEN_MS) / UPDATE_LEN_MS;
-		// SDL_Log("Delta time %d %d consumable %f ", current, _intern_time.delta_time, consumable);
 		game_loop(args);
 		consumable -= UPDATE_LEN_MS;
 		++i;

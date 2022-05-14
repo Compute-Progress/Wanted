@@ -12,16 +12,13 @@ int simple_loop(void *data)
         go = -1;
     (void)go;
     sprite->dst->x += go * SDLX_Time_Get().delta_time;
-    // SDL_Log("DEltae time %d", SDLX_Time_Get().delta_time);
     return 1;
 }
 
 int main()
 {
-    SDLX_Display *display;
-    SDLX_Sprite sprite;
-    SDL_Texture *tex;
-    SDL_Rect dst;
+    SDLX_Display    *display;
+    master          *game_master;
 
     SDLX_Start(
         WINDOW_NAME,
@@ -31,23 +28,15 @@ int main()
         WINDOW_W,
         0
     );
-    dst.h = WINDOW_H / 10;
-    dst.w = WINDOW_W / 10;
-    dst.y = WINDOW_H / 2;
     display = SDLX_Display_Get();
-    tex = SDLX_Texture_Load("assets/circle.png", display);
-    SDLX_Sprite_Create(&sprite, 0, tex);
-    sprite.src = NULL;
-    sprite._dst = dst;
-
+    game_master = game_init();
     while(1)
     {
         SDLX_Render_Reset(display);
         SDLX_RenderQueue_FlushAll();
         SDLX_InputLoop();
         SDLX_Input_Update();
-        SDLX_TimedLoop(simple_loop, &sprite);
-        SDLX_RenderQueue_Push(&sprite);
+        SDLX_TimedLoop(game_loop, game_master);
         SDLX_RenderAll(display);
         SDL_RenderPresent(display->renderer);
         SDLX_CapFPS();

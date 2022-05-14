@@ -1,7 +1,7 @@
 #ifndef SDLX_MACRO
 # define SDLX_MACRO
 
-# define DEFAULT_QUEUES_COUNT 1
+# define DEFAULT_QUEUES_COUNT 2
 # define DEFAULT_QUEUE_SIZE 5
 # define FPS 60
 # define FRAME_TIME 1000 / FPS

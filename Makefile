@@ -15,6 +15,7 @@ SRCS_DIR = srcs/
 BIN_DIR = bin/
 
 SDLX_NAMES =		\
+		SDLX_debug	\
 		SDLX_init	\
 		SDLX_input	\
 		SDLX_render	\
@@ -23,6 +24,7 @@ SDLX_NAMES =		\
 SRC_FILES =			\
 	$(addprefix $(SDLX_DIR), $(SDLX_NAMES))\
 	main			\
+	game			\
 
 SRCS = $(addprefix $(SRCS_DIR),$(addsuffix .c, $(SRC_FILES)))
 
