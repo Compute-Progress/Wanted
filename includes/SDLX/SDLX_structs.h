@@ -71,4 +71,10 @@ typedef struct SDLX_Time
     uint32_t    frame_count;
 }   SDLX_Time;
 
+typedef struct SDLX_Circle
+{
+    SDL_Point   center;
+    int         radius;
+}   SDLX_Circle;
+
 #endif

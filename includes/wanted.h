@@ -10,10 +10,19 @@
 # define WINDOW_W 500
 # define MAX_SPRITE 100
 
+typedef void(*movement)(SDLX_Sprite *, SDLX_Time);
+
+typedef struct	t_entity
+{
+	SDLX_Sprite		sprite;
+	int				faction;
+	movement		move_fn;
+}	entity; 
+
 typedef struct t_maser
 {
-	SDLX_Sprite 	*sprites;
-	SDLX_Sprite 	wanted;
+	entity 			*entities;
+	entity 			wanted;
 	int 			sprite_count;
 	int				level;
 	double			timer;
@@ -21,7 +30,9 @@ typedef struct t_maser
 	SDLX_Display	*display;
 }	master;
 
+
 master *game_init(void);
 int 	game_loop(void *data);
+void	move_left(SDLX_Sprite *sprite, SDLX_Time time);
 
 #endif

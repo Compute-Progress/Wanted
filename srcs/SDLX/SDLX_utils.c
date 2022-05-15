@@ -21,9 +21,18 @@ SDL_Texture	*SDLX_Texture_Load(char *path, SDLX_Display *display)
 	return 	SDL_CreateTextureFromSurface(display->renderer, IMG_Load(path));
 }
 
+int SDLX_PointInCircle(SDL_Point point, SDLX_Circle circle)
+{
+	return (
+		point.x <= circle.center.x + circle.radius &&
+		point.x >= circle.center.x - circle.radius &&
+		point.y <= circle.center.y + circle.radius &&
+		point.y >= circle.center.y - circle.radius
+	);
+}
+
 int SDLX_TimedLoop(int (*game_loop)(void *), void *args)
 {
-
 	Uint32 	current;
 	int		i;
 
@@ -62,3 +71,4 @@ void SDLX_CapFPS()
 }
 
 SDLX_Time SDLX_Time_Get(void) {return _intern_time;}
+

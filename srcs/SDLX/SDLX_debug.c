@@ -24,3 +24,20 @@ void SDLX_Sprite_Print(SDLX_Sprite *sprite)
 		SDL_Log("*src : {x: %d, y: %d, w: %d, h: %d}", 
 		sprite->src->x, sprite->src->y, sprite->src->w, sprite->src->h);
 }
+
+# include <time.h>
+float SDLX_CPUTime_Function(void (*fn)(void *),void *data,  int iter)
+{
+	clock_t before;
+	float 	total;
+	int i;
+
+	while (i < iter)
+	{
+		before = clock();
+		fn(data);
+		total += (float)(clock() - before) / CLOCKS_PER_SEC;
+		++i;
+	}
+	return total;
+}

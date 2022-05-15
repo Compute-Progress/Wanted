@@ -52,6 +52,7 @@ SDLX_Input 	SDLX_Input_Get(void);
 void 		SDLX_CapFPS();
 SDLX_Time 	SDLX_Time_Get(void);
 int			SDLX_TimedLoop(int (*game_loop)(void *), void *args);
+int			SDLX_PointInCircle(SDL_Point point, SDLX_Circle circle);
 
 //Maybe put dbeug in its own header to be included separately
 /**

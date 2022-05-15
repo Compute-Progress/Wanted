@@ -7,13 +7,12 @@ Timer and fps DONE
 Display image in layers DONE
 Display text
 - Game -
-Simple hitbox
-Click on layers
-Move images
+Simple hitbox DONE
+Move images DONE
 Algorithm to randomize start position :
     - Wanted position : 
-        - Pick a random crowd face
-        - Attenpt to hid behind it (offset the position in x and y)
+        - Pick a random crowd face DONE
+        - Attenpt to hid behind it (offset the position in x and y)DONE
     - All random or clusters
         - Cluster :
             - Random width and hieght (within a certain range)
