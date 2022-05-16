@@ -1,30 +1,45 @@
 # include "wanted.h"
 
+
+
 void game_next_level(master *game_master)
 {
-	long rand;
-
-	srand(SDL_GetTicks());
-	movement move_fns[] =
-	{
-		move_left
-	};
 	int i;
+	long random_num;
+	int objCount;
+	divide *formation;
 
 	i = 0;
-	while (i < game_master->sprite_count)
+	objCount = MIN(9 * game_master->level, MAX_SPRITE - 1);
+
+	srand(SDL_GetTicks());
+	while(i < objCount)
 	{
-		game_master->entities[i].sprite.dst->x = random() % (WINDOW_W - game_master->entities[i].sprite.dst->w);
-		game_master->entities[i].sprite.dst->y = random() % (WINDOW_H - game_master->entities[i].sprite.dst->h);
-		game_master->entities[i].move_fn =  move_fns[0];
+		random_num = rand() % 4;
+		formation = &game_master->formations[random_num];
+		if (formation->amount < FORMATION_CAP - 1)
+		{
+			formation->contents[formation->amount] = &game_master->entities[i];
+			formation->amount++;
+		}
 		++i;
 	}
-	rand = random() % game_master->sprite_count;
-	game_master->wanted.move_fn = game_master->entities[rand].move_fn;
-	game_master->wanted.sprite._dst = game_master->entities[rand].sprite._dst;
+	i = 0;
+	while (i < game_master->divide_count)
+	{
+		create_formation(game_master, game_master->formations[i].amount, i);
+		SDL_Log("Here %d %d", game_master->formations[i].amount, i);
+		++i;
+	}
+	random_num = rand() % 4;
+	formation = &game_master->formations[random_num];
+	formation->contents[formation->amount] = &game_master->wanted;
+	formation->amount++;
+	game_master->wanted.sprite._dst = formation->contents[rand() % MAX(1, (formation->amount - 1))]->sprite._dst;
+	//TODO Cap this so it doesnt go off screen
 	game_master->wanted.sprite.dst->x += 10;
 	game_master->wanted.sprite.dst->y += 10;
-
+	SDL_Log("Wanted here %d %d", game_master->wanted.sprite._dst.x, game_master->wanted.sprite._dst.y);
 }
 
 master *game_init(void)
@@ -48,7 +63,6 @@ master *game_init(void)
 		dst.w = WINDOW_W / 10;
 		dst.y = WINDOW_H / 2;
 		dst.x = 0;
-		game_master->entities[i].move_fn = NULL;
 		game_master->entities[i].sprite.src = NULL;
 		game_master->entities[i].sprite._dst = dst;
 		++i;
@@ -57,7 +71,10 @@ master *game_init(void)
 	game_master->wanted.sprite._dst = dst;
 	game_master->wanted.sprite.src = NULL;
 	game_master->sprite_count = 3; //TODO : Change this to the actual count and init in level selectx
-	
+	game_master->divide_count = 4;
+	game_master->timer = 0.0;
+	game_master->level = 1;
+	reset_formations(game_master);
 	game_next_level(game_master);
 	SDL_Log("Init game");
 	return game_master;
@@ -106,20 +123,18 @@ int game_loop(void *data)
 
 	game_master->timer += collision * 10;
 	
-	while (i < game_master->sprite_count)
+	while (i < game_master->divide_count)
 	{
-		if (game_master->entities[i].move_fn)
+		if (game_master->formations[i].movement_fn)
 		{
-			game_master->entities[i].move_fn(&game_master->entities[i].sprite, time);
-			SDLX_RenderQueue_Push(&(game_master->entities[i].sprite));
+			game_master->formations[i].movement_fn(&game_master->formations[i].contents, game_master->formations[i].amount, time);
 		}
 		++i;
 	}
-	game_master->wanted.move_fn(&game_master->wanted.sprite, time);
 	SDLX_RenderQueue_Push(&game_master->wanted.sprite);
 
 	// SDLX_Sprite_Print(&game_master->sprites[0]);
-	SDL_Log("Timer %f", game_master->timer);
+	// SDL_Log("Timer %f", game_master->timer);
 
 	return 1;
 }

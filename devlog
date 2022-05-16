@@ -71,3 +71,45 @@
 
     The key to upadting and rendering properly seems to be to update independently of rendering. Meaning one update won't necessarily equal one render.
     I'm going to set a "n updates per ms" macro, and use the FPS one as a n of frames rendered per sec
+
+- 05?15 3:01 
+
+    After further analysize of Wanted's gameplay, I have come to revise the movement algorithm I originally wanted to makefile
+    There seem to be 2 kind of original position :
+        - Pattern
+        - Random
+    And 3 kinds of movement :
+        - Random
+        - Pattern
+        - Static
+    Where any of the original position may be paired with any of the movements.
+    Here they are in further details : 
+       - Position -
+            - Pattern : Images of a kind are arranged together to form a shape or formation
+            - Random : Random placement
+        - Movement -
+            - Random : All images independent of kind move in a random position and bounce off the screen
+            - Pattern : All images of a kind move the same way and teleport to other side of screen
+            - Static : No movement
+
+    This is not "Hard to code" per se, rather, it is harder to code in an organized fashion
+    The combination : Static + patterm should only appear in the earlier levels;
+
+    One of the challenges is finding a way to divide the sprites into organice chunks( not of the same size)
+    If one defines min amount in parttern and max getting organic divisons could be as simple as doing a call to rand %(max - min) + min
+    This should give a number at least min but not max
+    Should have a max of 4 patterns. if by 3 iteration of the above there is still someremaining sprites, make a 4th patern out of it
+    Of course the trouble is to not get two overlapping patterns. Solution : Either set it randomly or set next value
+
+
+- 05/16 9:28
+
+    I was going to do the above , at least the part for creating organic divisions, when I stumbled across a problem
+    I need keep track of all entities in an array in order to do collisions. Of course, I can just iterate through the formations's enitity 
+    array and do it that way, but it is less efficient, I think?
+
+    The other way would be  to call rand() for each entitiy and assign it to that formation. It works but it is less elegant in my opinion and has the
+    side effect of potentially overfilling the formation array(in which case I should probably re roll and add to another formation)
+    Though thinking about it, there is also a certain elegance to it and an added sense of randomness. From time to time there would just be a few sprite that are just
+    not part of anything, and it might actually be nice. It is a feature I guess. It is also the simpler code to write, so maybe I will go with that
+    

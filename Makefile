@@ -1,7 +1,7 @@
 NAME = wanted
 
 DEBUG_FLAGS = -fsanitize=address
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+FLAGS = 
 INCLUDES = -I includes/ -I includes/SDL2/ -I includes/SDLX/
 
 LIB_DIR = libs/
@@ -25,7 +25,7 @@ SRC_FILES =			\
 	$(addprefix $(SDLX_DIR), $(SDLX_NAMES))\
 	main			\
 	game			\
-	movement		\
+	formation		\
 
 SRCS = $(addprefix $(SRCS_DIR),$(addsuffix .c, $(SRC_FILES)))
 
