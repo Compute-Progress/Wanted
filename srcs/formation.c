@@ -1,46 +1,60 @@
 #include "wanted.h"
 
 
-void move_circle(entity **entities, int count, SDLX_Time time)
+void move_circle(divide *formation, SDLX_Time time)
 {
 	// if (sprite->dst->x + sprite->dst->w <= 0)
 	// 	sprite->dst->x = WINDOW_W;
 	// sprite->dst->x -= 1 * time.delta_time;
 }
 
-void move_none(entity **entities, int count, SDLX_Time time)
+void move_none(divide *formation, SDLX_Time time)
 {
 	int i;
 
 	i = 0;
-	while (i < count)
+	while (i < formation->amount)
 	{
-		SDLX_RenderQueue_Push(&entities[i]->sprite);
+		SDLX_RenderQueue_Push(&formation->contents[i]->sprite);
 		++i;
 	}
 }
 
-void move_sine(entity **entities, int count, SDLX_Time time)
+void move_sine(divide *formation, SDLX_Time time)
 {
 
 }
 
-void move_rand(entity **entities, int count, SDLX_Time time)
+void move_rand(divide *formation, SDLX_Time time)
 {
 
 }
 
-void move_step(entity **entities, int count, SDLX_Time time)
+void move_step(divide *formation, SDLX_Time time)
+{
+	int i;
+
+	i = 0;
+	while (i < formation->amount)
+	{
+		SDL_Log("Here %d", i);
+		formation->contents[i]->sprite.dst->x += formation->x;
+		formation->contents[i]->sprite.dst->y += formation->y;
+		if (formation->contents[i]->sprite.dst->x > WINDOW_W)
+			formation->contents[i]->sprite.dst->x = 0;
+		if (formation->contents[i]->sprite.dst->y > WINDOW_H)
+			formation->contents[i]->sprite.dst->y = 0;
+		SDLX_RenderQueue_Push(&formation->contents[i]->sprite);
+		++i;
+	}
+}
+
+void make_circle(divide *formation, int count)
 {
 
 }
 
-void make_circle(entity **entities, int count)
-{
-
-}
-
-void make_line(entity **entities, int count)
+void make_line(divide *formation, int count)
 {
 	long gap_x;
 	long gap_y;
@@ -68,26 +82,26 @@ void make_line(entity **entities, int count)
 	// SDL_Log("HERE 4");
 	while (i < count)
 	{
-		entities[i]->sprite._dst.x = x;
-		entities[i]->sprite._dst.y = y;
+		formation->contents[i]->sprite._dst.x = x;
+		formation->contents[i]->sprite._dst.y = y;
 		x += gap_x;
 		y += gap_y;
 		++i;
 	}
 }
 
-void make_rectangle(entity **entities, int count)
+void make_rectangle(divide *formation, int count)
 {
 
 }
 
-void make_rand(entity **entities, int count)
+void make_rand(divide *formation, int count)
 {
 
 }
 
 
-typedef void(*init_pos)(entity **, int);
+typedef void(*init_pos)(divide *, int);
 
 void reset_formations(master *game_master)
 {
@@ -130,7 +144,9 @@ void create_formation(master *game, int member_count, int index)
 
 	//Pick inital shape
 	// inits[rand() % 4](&game->formations[index], member_count);
-	inits[1](&game->formations[index].contents, member_count);
+	inits[1](&game->formations[index], member_count);
+	game->formations[index].x = rand() % 1;
+	game->formations[index].y = rand() % 1;
 	// choose movement
 	// if (rand() % STATIC)// If not static, pick random movement function
 	// {

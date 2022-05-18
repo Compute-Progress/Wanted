@@ -25,7 +25,7 @@ typedef struct	t_entity
 	int				angle;
 }	entity;
 
-typedef void(*movement_fn)(entity **, int, SDLX_Time);
+typedef void(*movement_fn)(struct t_divide *, SDLX_Time);
 typedef struct t_divide
 {
 	int 			amount;

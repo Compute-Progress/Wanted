@@ -127,7 +127,7 @@ int game_loop(void *data)
 	{
 		if (game_master->formations[i].movement_fn)
 		{
-			game_master->formations[i].movement_fn(&game_master->formations[i].contents, game_master->formations[i].amount, time);
+			game_master->formations[i].movement_fn(&game_master->formations[i].contents,  time);
 		}
 		++i;
 	}
