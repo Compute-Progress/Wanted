@@ -8,39 +8,34 @@
 # define WINDOW_Y SDL_WINDOWPOS_CENTERED
 # define WINDOW_H 500
 # define WINDOW_W 500
-# define MAX_SPRITE 100
-# define FORMATION_CAP 50
+# define MAX_SPRITE 35
+# define MIN_SPRITE 5
 
-# define STATIC 1
-# define RANDOM 2
-# define SHAPE 3
-# define LINE 4
+# define SPRITE_W 32
+# define SPRITE_H 32
+
 # define MOVEMENT_TOTAL 4
+# define SIGN (int [2]){1, -1}
 
+typedef struct t_entity entity;
+
+typedef void(*movement_fn)(entity *, SDLX_Time);
 
 typedef struct	t_entity
 {
 	SDLX_Sprite		sprite;
-	int				faction;
-	int				angle;
+	movement_fn		move;
+	int				r;
+	double			angle;
+	int				dx;
+	int				dy;
 }	entity;
 
-typedef void(*movement_fn)(struct t_divide *, SDLX_Time);
-typedef struct t_divide
-{
-	int 			amount;
-	entity			*contents[FORMATION_CAP];
-	movement_fn 	movement_fn;
-
-	int				x;
-	int 			y;
-}	divide;
 
 typedef struct t_maser
 {
 	entity 			*entities;
 	entity 			wanted;
-	divide			formations[4];
 
 	int				divide_count;
 	int 			sprite_count;
@@ -53,7 +48,7 @@ typedef struct t_maser
 
 master *game_init(void);
 int 	game_loop(void *data);
-void 	create_formation(master *game, int member_count, int index);
 void 	reset_formations(master *game_master);
+void 	game_next_level(master *game_master);
 
 #endif

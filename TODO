@@ -30,3 +30,28 @@ Timer goes up by 15 sec for every correct and down by 5 for every wrong
 Start with 15 secss
 Resizeable window                    
 
+
+Check positions :
+    X Circle
+    X Random
+    X LINE
+
+Check movement:
+    X Circle
+    X LINE
+    X Sine
+    X Random
+
+X Next level when found
+X Level difficulty (add more sprites)
+
+X Correct pffset for wanted sprite
+Refactor
+Timer add and remove when click
+Display timer and level
+End screen (lvl + score)
+intermediate screen ( 5 sec pause, display cat to find)
+Name ?
+Assets (cats, title, thumbnail)
+Title screen ( cat ran away, help find them)
+Tweak assets size and max / min number

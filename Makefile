@@ -1,11 +1,11 @@
 NAME = wanted
 
-DEBUG_FLAGS = -fsanitize=address
+DEBUG_FLAGS = -fsanitize=address -g
 FLAGS = 
 INCLUDES = -I includes/ -I includes/SDL2/ -I includes/SDLX/
 
 LIB_DIR = libs/
-LIBRARIES= -l SDL2 -l SDL2_image 
+LIBRARIES= -l SDL2 -l SDL2_image -lm
 # LIBRARIES = $(LIB_DIR)libSDL2.dylib $(LIB_DIR)libSDL2_image.dylib $(LIB_DIR)libSDL2_ttf.dylib
 STATIC_LIB = 
 
@@ -34,7 +34,7 @@ OBJS = $(addprefix $(BIN_DIR), $(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(BIN_DIR) $(OBJS)
-	gcc $(FLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBRARIES)
+	gcc $(FLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBRARIES) $(DEBUG_FLAGS)
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)

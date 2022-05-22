@@ -11,6 +11,8 @@ void SDLX_InputLoop(void)
 	{
 		if (event.type == SDL_QUIT)
 			exit(0);
+		if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+			exit(0);
 	}
 }
 
