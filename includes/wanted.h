@@ -37,9 +37,9 @@ typedef struct t_maser
 	entity 			*entities;
 	entity 			wanted;
 
-	int				divide_count;
 	int 			sprite_count;
 	int				level;
+	int				state;
 	double			timer;
 
 	SDLX_Display	*display;

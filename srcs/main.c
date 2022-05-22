@@ -1,20 +1,5 @@
 #include "../includes/wanted.h"
 
-int simple_loop(void *data)
-{
-    SDLX_Sprite *sprite;
-    static int go = 1;
-
-    sprite = data;
-    if (sprite->dst->x < 0 )
-        go = 1;
-    if (sprite->dst->x > WINDOW_W)
-        go = -1;
-    (void)go;
-    sprite->dst->x += go * SDLX_Time_Get().delta_time;
-    return 1;
-}
-
 int main()
 {
     SDLX_Display    *display;
@@ -30,7 +15,8 @@ int main()
     );
     display = SDLX_Display_Get();
     game_master = game_init();
-    while(1)
+
+    while(game_master->state)
     {
         SDLX_Render_Reset(display);
         SDLX_RenderQueue_FlushAll();
