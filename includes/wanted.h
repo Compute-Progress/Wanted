@@ -51,4 +51,12 @@ int 	game_loop(void *data);
 void 	reset_formations(master *game_master);
 void 	game_next_level(master *game_master);
 
+
+void wrap_position(entity *entity);
+void move_circle(entity *self, SDLX_Time time);
+void move_none(entity *self, SDLX_Time time);
+void move_rand(entity *self, SDLX_Time time);
+void move_sine(entity *self, SDLX_Time time);
+void move_step(entity *self, SDLX_Time time);
+
 #endif
