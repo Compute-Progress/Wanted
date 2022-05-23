@@ -136,23 +136,6 @@ void make_rand(entity *entities, int count)
 
 typedef void(*init_pos)(entity *entities, int);
 
-void reset_formations(master *game_master)
-{
-	int i;
-
-	i = 0;
-	while (i < game_master->sprite_count)
-	{
-		game_master->entities[i].angle = 0;
-		game_master->entities[i].move = NULL;
-		game_master->entities[i].dx = 0;
-		game_master->entities[i].dy = 0;
-		++i;
-	}
-	game_master->level = 0;
-	game_master->sprite_count = 0;
-	game_master->timer = 0;
-}
 
 void place_wanted(master *game_master)
 {
@@ -164,16 +147,11 @@ void place_wanted(master *game_master)
 	game_master->wanted.angle = game_master->entities[random_num].angle;
 	game_master->wanted.dx = game_master->entities[random_num].dx;
 	game_master->wanted.dy = game_master->entities[random_num].dy;
-	// SDL_Log("HERE IS WANTED BEFORE %d %d", game_master->wanted.sprite.dst->x, game_master->wanted.sprite.dst->y);
-	// SDL_Log("OFFSET %d %d %d %d", game_master->wanted.dy, game_master->wanted.dx,   game_master->wanted.sprite.dst->w,   game_master->wanted.sprite.dst->w);
 	
 	//										Direction       *	    offset size 	*		axis
 	game_master->wanted.sprite.dst->x += (SIGN[rand() % 2]) * (((rand() % 100) + 50) * game_master->wanted.dy);
 	game_master->wanted.sprite.dst->y += (SIGN[rand() % 2]) * (((rand() % 100) + 50) * game_master->wanted.dx);
 	wrap_position(&game_master->wanted);
-	// SDL_Log("HERE IS WANTED AFTER %d %d", game_master->wanted.sprite.dst->x, game_master->wanted.sprite.dst->y);
-	// SDL_Log("HERE IS WANTED COPY %d %d",  game_master->entities[random_num].sprite.dst->x,
-	// game_master->entities[random_num].sprite.dst->y);
 	game_master->wanted.r = game_master->entities[random_num].r;
 	game_master->wanted.r += (SIGN[rand() % 2])  * 20;
 }

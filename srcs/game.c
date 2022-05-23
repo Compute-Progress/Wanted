@@ -1,48 +1,5 @@
 # include "wanted.h"
 
-master *game_init(void)
-{
-	master *game_master;
-	
-	SDL_Rect dst;
-	SDL_Texture *tex;
-	SDL_Texture *tex2;
-
-	int 	i;
-
-	
-	game_master = SDL_calloc(1, sizeof(master));
-	game_master->display = SDLX_Display_Get();
-	game_master->entities = SDL_calloc(MAX_SPRITE + 1, sizeof(entity));
-	game_master->timer = 0.0;
-	game_master->level = 1;
-	game_master->state = 1;
-	
-	tex = SDLX_Texture_Load("assets/circle.png", game_master->display);
-	tex2 = SDLX_Texture_Load("assets/red_circle.png", game_master->display);
-	i = 0;
-	
-	while (i < MAX_SPRITE)
-	{
-		SDLX_Sprite_Create(&(game_master->entities[i].sprite), 1, tex);
-		dst.h = WINDOW_H / 9;
-		dst.w = WINDOW_W / 9;
-		dst.y = WINDOW_H / 2;
-		dst.x = 0;
-		game_master->entities[i].sprite.src = NULL;
-		game_master->entities[i].sprite._dst = dst;
-		++i;
-	}
-	SDLX_Sprite_Create(&(game_master->wanted.sprite), 0, tex2);
-	game_master->wanted.sprite._dst = dst;
-	game_master->wanted.sprite.src = NULL;
-
-	reset_formations(game_master);
-	game_next_level(game_master);
-	SDL_Log("Init game");
-	return game_master;
-}
-
 
 int collisions_loop(master *game_master)
 {
@@ -55,7 +12,8 @@ int collisions_loop(master *game_master)
 	{
 		if (SDL_PointInRect(&input.mouse, game_master->wanted.sprite.dst))
 		{
-			game_next_level(game_master);
+			// Goes to transition screen
+			game_master->state = 3;
 			return 1;
 		}
 		while (i < game_master->sprite_count)
@@ -88,7 +46,12 @@ int game_loop(void *data)
 	game_master = data;
 
 	i = 0;
-	game_master->timer += time.delta_time / 100.0;
+	game_master->timer -= time.delta_time / 100.0;
+	if (game_master->timer <= 0)
+	{
+		game_master->state = 2;
+		return 1;
+	}
 	collision = collisions_loop(game_master);
 
 	game_master->timer += collision * 10;
@@ -112,4 +75,68 @@ int game_loop(void *data)
 	SDLX_RenderMessage_Aligned(game_master->display, SDLX_LEFT_ALIGN, SDLX_TOP_ALIGN, DEFAULT_FONT_COLOR, 
 	str);
 	return 1;
+}
+
+int end_loop(void *data)
+{
+	master		*game_master;
+	SDLX_Input input;
+	char 		str[50];
+
+	game_master = data;
+	input = SDLX_Input_Get();
+
+	if (input.mouse_state == 2)
+	{
+		game_master->state = 1;
+		return 1;
+	}
+
+	SDLX_RenderMessage_Aligned(game_master->display, SDLX_CENTER_ALIGN, SDLX_TOP_ALIGN, DEFAULT_FONT_COLOR, 
+	"GAME OVER");
+	SDL_snprintf(str, 50, "Your score: %d \n Click to play again", (int)game_master->level);
+	SDLX_RenderMessage_Aligned(game_master->display, SDLX_CENTER_ALIGN, SDLX_CENTER_ALIGN, DEFAULT_FONT_COLOR, 
+	str);
+
+	return 1;
+}
+
+int start_loop(void *data)
+{
+	master		*game_master;
+ 	SDLX_Input input;
+	char 		str[50];
+
+	input = SDLX_Input_Get();
+	game_master = data;
+
+	if (input.mouse_state == 2)
+	{
+		reset_game(game_master);
+		game_master->state = 1;
+		return 1;
+	}
+	SDL_snprintf(str, 50, "Mr. Miaow has escaped !!! Find him !!");
+	SDLX_RenderMessage_Aligned(game_master->display, SDLX_CENTER_ALIGN, SDLX_CENTER_ALIGN, DEFAULT_FONT_COLOR, 
+	str);
+
+	return 1;
+}
+
+int transition_screen(void *data)
+{
+	static double	count = 0.0;
+	SDLX_Time		time;
+	master			*game_master;
+
+	SDL_Log("trnasition %f", count);
+	time = SDLX_Time_Get();
+	if (count >= 2)
+	{
+		count = 0.0;
+		game_master = data;
+		game_next_level(game_master);
+		game_master->state = 1;
+	}
+	count += time.delta_time / 100.0;	
 }

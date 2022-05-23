@@ -53,9 +53,10 @@ X Display timer and level
         X Set font
         X Render message (msg, size (auto), pos (auto, auto))
 
-End screen (lvl + score)
+X End screen (lvl + score)
 Assets (cats, title, thumbnail)
 intermediate screen ( 5 sec pause, display cat to find)
 Name ?
 Title screen ( cat ran away, help find them)
 Tweak assets size and max / min number
+Fix leaks

@@ -23,10 +23,11 @@ SDLX_NAMES =		\
 
 SRC_FILES =			\
 	$(addprefix $(SDLX_DIR), $(SDLX_NAMES))\
-	main			\
 	game			\
-	formation		\
+	inits			\
+	main			\
 	movement		\
+	placement		\
 
 SRCS = $(addprefix $(SRCS_DIR),$(addsuffix .c, $(SRC_FILES)))
 

@@ -47,10 +47,14 @@ typedef struct t_maser
 
 
 master *game_init(void);
-int 	game_loop(void *data);
 void 	reset_formations(master *game_master);
-void 	game_next_level(master *game_master);
+void 	reset_game(master *game_master);
 
+int 	game_loop(void *data);
+int 	end_loop(void *data);
+int 	start_loop(void *data);
+int 	transition_screen(void *data);
+void 	game_next_level(master *game_master);
 
 void wrap_position(entity *entity);
 void move_circle(entity *self, SDLX_Time time);
