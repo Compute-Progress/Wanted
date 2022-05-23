@@ -2,6 +2,7 @@
 # define SDLX_H
 
 # include "SDL2/SDL_image.h"
+# include "SDL2/SDL_ttf.h"
 
 # include "SDLX_input.h"
 # include "SDLX_macro.h"
@@ -28,6 +29,9 @@ void		SDLX_RenderQueue_Push(SDLX_Sprite *sprite);
 void        SDLX_RenderQueue_Flush(uint32_t id);
 void		SDLX_RenderQueue_FlushAll(void);
 uint32_t    SDLX_RenderQueue_Create(SDL_bool isSorted);
+
+void SDLX_RenderMessage_Aligned(SDLX_Display *display, int x_align, int y_align, SDL_Color color, char *text);
+void SDLX_RenderMessage(SDLX_Display *display, SDL_Rect *dst, SDL_Color color, char *text);
 
 SDLX_RenderQueue	*SDLX_RenderQueue_Get(uint32_t id);
 

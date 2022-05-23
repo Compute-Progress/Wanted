@@ -107,3 +107,47 @@ SDLX_RenderQueue *SDLX_RenderQueue_Get(uint32_t id)
 
 	return NULL;
 }
+
+// 0 if renderered, 1 if error
+
+void SDLX_RenderMessage_Aligned(SDLX_Display *display, int x_align, int y_align, SDL_Color color, char *text)
+{
+	SDL_Surface *surf;
+	SDL_Rect 	dst;
+
+	if (!display->defaultFont)
+	{
+		SDL_Log("No font");
+		return ;
+	}
+	surf = TTF_RenderText_Solid(display->defaultFont, text, color);
+	TTF_SizeText(display->defaultFont, text, &dst.w, &dst.h);
+	if (x_align == SDLX_RIGHT_ALIGN)
+		dst.x = 0;
+	else if (x_align == SDLX_LEFT_ALIGN)
+		dst.x = display->win_w - dst.w;
+	else if (x_align == SDLX_CENTER_ALIGN)
+		dst.x = (display->win_w / 2) - (dst.w / 2);
+
+	if (y_align == SDLX_TOP_ALIGN)
+		dst.y = 0;
+	else if (y_align == SDLX_BOTTOM_ALIGN)
+		dst.y = display->win_h - dst.h;
+	else if (y_align == SDLX_CENTER_ALIGN)
+		dst.y = (display->win_h / 2) - (dst.h / 2);
+
+	SDL_RenderCopy(display->renderer, SDL_CreateTextureFromSurface(display->renderer, surf),
+		NULL, &dst);
+	SDL_FreeSurface(surf);
+}	
+
+void SDLX_RenderMessage(SDLX_Display *display, SDL_Rect *dst, SDL_Color color, char *text)
+{
+	SDL_Surface *surf;
+
+	surf = TTF_RenderText_Solid(display->defaultFont, text, color);
+
+	SDL_RenderCopy(display->renderer, SDL_CreateTextureFromSurface(display->renderer, surf),
+		NULL, dst);
+	SDL_FreeSurface(surf);
+}	

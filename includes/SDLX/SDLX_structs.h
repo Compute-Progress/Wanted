@@ -18,6 +18,11 @@ typedef struct SDLX_Display
     SDL_Window      *window;
     SDL_Renderer    *renderer;
     SDL_Texture     *background;
+
+    TTF_Font        *defaultFont;
+
+    int             win_w;
+    int             win_h;
 }   SDLX_Display;
 
 /**

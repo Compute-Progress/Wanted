@@ -79,6 +79,7 @@ int game_loop(void *data)
 {
 	SDLX_Time	time;
 	master		*game_master;
+	char 		str[50];
 
 	int i;
 	int	collision;
@@ -104,6 +105,11 @@ int game_loop(void *data)
 
 	game_master->wanted.move(&game_master->wanted,  time);
 	SDLX_RenderQueue_Push(&game_master->wanted.sprite);
-
+	SDL_snprintf(str, 50, "Level : %d", game_master->level);
+	SDLX_RenderMessage_Aligned(game_master->display, SDLX_RIGHT_ALIGN, SDLX_TOP_ALIGN, DEFAULT_FONT_COLOR, 
+	str);
+	SDL_snprintf(str, 50, "%d", (int)game_master->timer);
+	SDLX_RenderMessage_Aligned(game_master->display, SDLX_LEFT_ALIGN, SDLX_TOP_ALIGN, DEFAULT_FONT_COLOR, 
+	str);
 	return 1;
 }

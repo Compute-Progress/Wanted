@@ -5,7 +5,7 @@ FLAGS =
 INCLUDES = -I includes/ -I includes/SDL2/ -I includes/SDLX/
 
 LIB_DIR = libs/
-LIBRARIES= -l SDL2 -l SDL2_image -lm
+LIBRARIES= -l SDL2 -l SDL2_image -l SDL2_ttf -lm
 # LIBRARIES = $(LIB_DIR)libSDL2.dylib $(LIB_DIR)libSDL2_image.dylib $(LIB_DIR)libSDL2_ttf.dylib
 STATIC_LIB = 
 
@@ -26,6 +26,7 @@ SRC_FILES =			\
 	main			\
 	game			\
 	formation		\
+	movement		\
 
 SRCS = $(addprefix $(SRCS_DIR),$(addsuffix .c, $(SRC_FILES)))
 

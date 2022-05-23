@@ -47,11 +47,15 @@ X Level difficulty (add more sprites)
 
 X Correct pffset for wanted sprite
 X Refactor
-Timer add and remove when click
-Display timer and level
+X Timer add and remove when click
+X Display timer and level
+    X SDLX simple ttf :
+        X Set font
+        X Render message (msg, size (auto), pos (auto, auto))
+
 End screen (lvl + score)
+Assets (cats, title, thumbnail)
 intermediate screen ( 5 sec pause, display cat to find)
 Name ?
-Assets (cats, title, thumbnail)
 Title screen ( cat ran away, help find them)
 Tweak assets size and max / min number
